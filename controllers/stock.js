@@ -11,7 +11,10 @@ const getStockData = (req, res) => {
     stockCache.has(`${symbol}_${interval}`) &&
     stockCache.get(`${symbol}_${interval}`).expiresAt > now
   ) {
-    return res.json(stockCache.get(`${symbol}_${interval}`));
+    return res.json({
+      data: stockCache.get(`${symbol}_${interval}`),
+      log: Array.from(stockCache.entries()),
+    });
   } else {
     stockCache.delete(`${symbol}_${interval}`); // Remove expired cache
   }
@@ -40,7 +43,10 @@ const getStockData = (req, res) => {
         if (firstKey) stockCache.delete(firstKey); // simple cleanup
       }
 
-      res.json(data);
+      res.json({
+        data,
+        log: Array.from(stockCache.entries()),
+      });
     })
     .catch((error) => {
       if (error.status === 429) {
