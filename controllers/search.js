@@ -1,4 +1,5 @@
 const searchCache = new Map();
+const MAX_CACHE_SIZE = 100;
 
 const searchStock = (req, res) => {
   const query = req.query.q;
@@ -21,8 +22,12 @@ const searchStock = (req, res) => {
           !stock.symbol.includes("."),
       );
       searchCache.set(query, filtered);
-      // Cache the results for 10 minutes
-      setTimeout(() => searchCache.delete(query), 10 * 60 * 1000);
+
+      // Cache the first 100 search results, removing the oldest if we exceed the limit
+      if (searchCache.size > MAX_CACHE_SIZE) {
+        const [firstKey] = searchCache.keys();
+        if (firstKey) searchCache.delete(firstKey); // simple cleanup
+      }
       res.json(filtered);
     })
     .catch((error) => {
