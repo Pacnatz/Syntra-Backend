@@ -64,10 +64,6 @@ function intervalToStartDate(interval) {
       return Math.floor(Date.now() / 1000) - 24 * 60 * 60; // 1 day ago
     case "5min":
       return Math.floor(Date.now() / 1000) - 7 * 24 * 60 * 60; // 1 week ago
-    case "15min":
-      return Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60; // 1 month ago
-    case "30min":
-      return Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60; // 1 month ago
     case "1h":
       return Math.floor(Date.now() / 1000) - 90 * 24 * 60 * 60; // 3 months ago
     case "1day":
@@ -83,10 +79,6 @@ function intervalToTTL(interval) {
       return 1 * 60; // 1 minute
     case "5min":
       return 5 * 60; // 5 minutes
-    case "15min":
-      return 15 * 60; // 15 minutes
-    case "30min":
-      return 30 * 60; // 30 minutes
     case "1h":
       return 60 * 60; // 1 hour
     case "1day":

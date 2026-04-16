@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const mainRouter = require("./routes/index");
+const InitializeSockets = require("./sockets/index");
+const { startSocket } = require("./services/finnhubSocket");
+
 require("dotenv").config();
 
 const app = express();
@@ -20,6 +23,9 @@ app.get("/", (req, res) => {
 });
 app.use("/", mainRouter);
 // Start the server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+const io = InitializeSockets(server);
+startSocket(io);
