@@ -85,6 +85,11 @@ function subscribeSymbol(rawSymbol) {
   const symbol = normalizeSymbol(rawSymbol);
   if (!symbol) return;
 
+  // Return early to avoid subscribing multiple times
+  if (activeSymbols.has(symbol)) {
+    console.log(symbol, "is already subscribed");
+    return;
+  }
   activeSymbols.add(symbol);
   if (connectionOpen) {
     // Testing purposes only - Use MDB to get BTCUSDT for aftermarket testing
