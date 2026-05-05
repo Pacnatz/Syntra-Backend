@@ -60,10 +60,24 @@ const getStockData = (req, res) => {
 
 function intervalToStartDate(interval) {
   switch (interval) {
-    case "1min":
-      return Math.floor(Date.now() / 1000) - 24 * 60 * 60; // 1 day ago
-    case "5min":
-      return Math.floor(Date.now() / 1000) - 7 * 24 * 60 * 60; // 1 week ago
+    case "1min": {
+      // Return the most recent weekday at 9:30 AM
+      const now = new Date();
+      const dayOfWeek = now.getDay();
+      const daysToSubtract = dayOfWeek === 0 ? 2 : dayOfWeek === 6 ? 3 : 1;
+      const returnDate = new Date(
+        now.getTime() - daysToSubtract * 24 * 60 * 60 * 1000,
+      );
+      return Math.floor(returnDate.getTime() / 1000);
+    }
+    case "5min": // 1 week ago
+      const now = new Date();
+      const dayOfWeek = now.getDay();
+      const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek === 6 ? 8 : 5;
+      const returnDate = new Date(
+        now.getTime() - daysToSubtract * 24 * 60 * 60 * 1000,
+      );
+      return Math.floor(returnDate.getTime() / 1000);
     case "1h":
       return Math.floor(Date.now() / 1000) - 90 * 24 * 60 * 60; // 3 months ago
     case "1day":

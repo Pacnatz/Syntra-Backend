@@ -37,6 +37,7 @@ function handleOpen() {
   console.log("Finnhub connection opened");
 
   for (const symbol of activeSymbols) {
+    console.log(symbol, "subscribing to stock updates on connection open");
     socket.send(JSON.stringify({ type: "subscribe", symbol }));
   }
 }
@@ -113,6 +114,7 @@ function subscribeSymbol(rawSymbol) {
 function unsubscribeSymbol(rawSymbol) {
   const symbol = normalizeSymbol(rawSymbol);
   if (!symbol) return;
+  if (!activeSymbols.has(symbol)) return; // Return early if the symbol isn't subscribed
 
   activeSymbols.delete(symbol);
   if (connectionOpen) {
