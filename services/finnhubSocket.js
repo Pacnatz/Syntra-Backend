@@ -1,4 +1,4 @@
-const FINNHUB_URL = `wss://ws.finnhub.io?token=${process.env.FINNHUB_API_KEY || "d7espqhr01qi33g7h8ngd7espqhr01qi33g7h8o0"}`;
+const FINNHUB_URL = `wss://ws.finnhub.io?token=${process.env.FINNHUB_API_KEY}`;
 
 let socket = null;
 let connectionOpen = false;
