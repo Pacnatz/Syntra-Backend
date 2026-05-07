@@ -10,7 +10,6 @@ const InitializeSockets = (server) => {
     },
   });
 
-  // FIXME:joinStockRoom event does not fire when navigating directly to a stock page
   io.on("connection", (socket) => {
     console.log(socket.id, "connected");
     socket.on("disconnect", () => {
