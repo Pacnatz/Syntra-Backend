@@ -22,6 +22,14 @@ app.get("/", (req, res) => {
   res.send({ message: "Hello from the server!" });
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.use("/api", mainRouter);
 // Start the server
 const server = app.listen(PORT, () => {
